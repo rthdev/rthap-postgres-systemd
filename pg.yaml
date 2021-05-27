@@ -56,9 +56,11 @@
         opts: noatime,defaults
         state: mounted
 
-    - name: Install postgres sql server
+    - name: Install postgres sql server and deps
       package:
-        name: postgresql-server
+        name:
+          - postgresql-server
+          - python3-psycopg2
         state: installed
 
     - name: Ensure DB path exists
@@ -86,3 +88,18 @@
         name: "{{ pg_db_unit }}"
         state: started
         enabled: true
+
+    - name: Configure Postgres to listen on all interfaces
+      postgresql_set:
+        name: listen_addresses
+        value: "*"
+        port: "{{ pg_db_port }}"
+      become_user: postgres
+      notify:
+        - Restart postgres
+
+  handlers:
+    - name: Restart postgres
+      systemd:
+        name: "{{ pg_db_unit }}"
+        state: restarted
