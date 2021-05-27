@@ -1,6 +1,7 @@
 ---
 - name: Playbook to configure Postgres
-  hosts: localhost
+  hosts: postgres
+  become: true
   vars:
     base_disk: /dev/sdb
     lvm_vg_base_name: vgpg
