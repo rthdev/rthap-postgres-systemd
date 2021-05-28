@@ -10,5 +10,5 @@ galaxy_info:
   galaxy_tags:
     - postgres
 
-dependencies: 
-  - role: rthar_pg_base
+dependencies: []
+  #- role: rthar_pg_base

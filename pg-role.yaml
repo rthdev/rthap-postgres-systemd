@@ -8,7 +8,7 @@
     base_lv_name: lvpg
     base_lv_fstype: xfs
     base_lv_mntpt: /dbs
-    clair_disk: /dev/sdb
+    clair_disk: /dev/sdc
     clair_vg_name: vgclair
     clair_lv_name: lvclair
     clair_lv_fstype: xfs

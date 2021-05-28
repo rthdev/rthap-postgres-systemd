@@ -1,5 +1,10 @@
 ---
 # tasks file for rthar_pg_cluster
+- name: Fail when device is not set
+  fail:
+    msg: "ERROR: Base disk not defined"
+  when: not rthar_pg_cluster_disk_dev
+
 - name: Ensure disk is partitioned
   parted:
     device: "{{ rthar_pg_cluster_disk_dev }}"
@@ -56,7 +61,7 @@
 
 - name: Initialize Database
   command:
-    cmd: postgresql-setup --initdb --unit={{ rthar_pg_cluster_systemd_unit }} --port={{ pg_db_port }}
+    cmd: postgresql-setup --initdb --unit={{ rthar_pg_cluster_systemd_unit }} --port={{ rthar_pg_cluster_port }}
     creates: "{{ rthar_pg_cluster_db_base }}/data/postgresql.conf"
 
 - name: Ensure Service is started and enabled
@@ -69,7 +74,7 @@
   postgresql_set:
     name: listen_addresses
     value: "*"
-    port: "{{ pg_db_port }}"
+    port: "{{ rthar_pg_cluster_port }}"
   become_user: postgres
   notify:
     - Restart postgres
