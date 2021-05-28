@@ -1,9 +1,21 @@
 ---
 # tasks file for rthar_pg_cluster
-- name: "{{ rthar_pg_cluster_name }} - Fail when device is not set"
-  fail:
-    msg: "ERROR: Base disk not defined"
-  when: not rthar_pg_cluster_disk_dev
+- name: "{{ rthar_pg_cluster_name }} - Verify that required variables are defined"
+  assert:
+    that: 
+      - "{{ rthar_pg_cluster_variable }} is defined"
+      - "{{ rthar_pg_cluster_variable }} | length > 0"
+    fail_msg: "{{ rthar_pg_cluster_variable }} needs to be set for the role to work"
+    success_msg: "Required variable {{ rthar_pg_cluster_variable }} is defined"
+  loop_control:
+    loop_var: rthar_pg_cluster_variable
+  loop:
+    - rthar_pg_cluster_disk_dev
+    - rthar_pg_cluster_vg_name
+    - rthar_pg_cluster_lv_name
+    - rthar_pg_cluster_lv_fstype
+    - rthar_pg_cluster_lv_mntpt
+    - rthar_pg_cluster_name
 
 - name: "{{ rthar_pg_cluster_name }} - Ensure disk is partitioned"
   parted:

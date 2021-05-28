@@ -1,9 +1,20 @@
 ---
 # tasks file for rthar_pg_base
-- name: Fail when device is not set
-  fail:
-    msg: "ERROR: Base disk not defined"
-  when: not rthar_pg_base_disk_dev
+- name: "Verify that required variables are defined"
+  assert:
+    that:
+      - "{{ rthar_pg_base_variable }} is defined"
+      - "{{ rthar_pg_base_variable }} | length > 0"
+    fail_msg: "{{ rthar_pg_base_variable }} needs to be set for the role to work"
+    success_msg: "Required variable {{ rthar_pg_base_variable }} is defined"
+  loop_control:
+    loop_var: rthar_pg_base_variable
+  loop:
+    - rthar_pg_base_disk_dev
+    - rthar_pg_base_vg_name
+    - rthar_pg_base_lv_name
+    - rthar_pg_base_lv_fstype
+    - rthar_pg_base_lv_mntpt
 
 - name: Ensure disk is partitioned
   parted:
