@@ -1,7 +1,7 @@
 ---
 # defaults file for rthar_pg_base
-rthar_pg_base_disk_dev: 
-rthar_pg_base_vg_name: vgpg
-rthar_pg_base_lv_name: lvpg
-rthar_pg_base_lv_fstype: xfs
-rthar_pg_base_lv_mntpt: /dbs
+rthar_pg_base_disk_dev:
+rthar_pg_base_vg_name:
+rthar_pg_base_lv_name:
+rthar_pg_base_lv_fstype:
+rthar_pg_base_lv_mntpt:
