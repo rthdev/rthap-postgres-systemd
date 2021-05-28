@@ -2,6 +2,22 @@
 - name: Playbook to configure Postgres
   hosts: postgres
   become: true
+  vars:
+    base_disk: /dev/sdb
+    base_vg_name: vgpg
+    base_lv_name: lvpg
+    base_lv_fstype: xfs
+    base_lv_mntpt: /dbs
+    clair_disk: /dev/sdb
+    clair_vg_name: vgclair
+    clair_lv_name: lvclair
+    clair_lv_fstype: xfs
+    clair_lv_mntpt: "{{ base_lv_mntpt }}/clair"
   roles:
     - role: rthar_pg_base
-      rthar_pg_base_disk_dev: /dev/sdb
+      rthar_pg_base_disk_dev: "{{ base_disk }}"
+      rthar_pg_base_vg_name: "{{ base_vg_name }}"
+      rthar_pg_base_lv_name: "{{ base_lv_name }}"
+      rthar_pg_base_lv_fstype: "{{ base_lv_fstype }}"
+      rthar_pg_base_lv_mntpt: "{{ base_lv_mntpt }}"
+
