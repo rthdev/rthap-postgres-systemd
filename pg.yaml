@@ -13,8 +13,15 @@
     clair_lv_name: lvclair
     clair_lv_fstype: xfs
     clair_lv_mntpt: "{{ base_lv_mntpt }}/clair"
-    clair_db_name: clair
-    clair_db_port: 5432
+    clair_db_cluster_name: clair
+    clair_db_cluster_port: 5432
+    quay_disk: /dev/sdd
+    quay_vg_name: vgquay
+    quay_lv_name: lvquay
+    quay_lv_fstype: xfs
+    quay_lv_mntpt: "{{ base_lv_mntpt }}/quay"
+    quay_db_cluster_name: quay
+    quay_db_cluster_port: 15432
   roles:
     - role: rthar_pg_base
       rthar_pg_base_disk_dev: "{{ base_disk }}"
@@ -29,6 +36,14 @@
       rthar_pg_cluster_lv_name: "{{ clair_lv_name }}"
       rthar_pg_cluster_lv_fstype: "{{ clair_lv_fstype }}"
       rthar_pg_cluster_lv_mntpt: "{{ clair_lv_mntpt }}"
-      rthar_pg_cluster_name: "{{ clair_db_name }}"
-      rthar_pg_cluster_port: "{{ clair_db_port }}"
+      rthar_pg_cluster_name: "{{ clair_db_cluster_name }}"
+      rthar_pg_cluster_port: "{{ clair_db_cluster_port }}"
 
+    - role: rthar_pg_cluster
+      rthar_pg_cluster_disk_dev: "{{ quay_disk }}"
+      rthar_pg_cluster_vg_name: "{{ quay_vg_name }}"
+      rthar_pg_cluster_lv_name: "{{ quay_lv_name }}"
+      rthar_pg_cluster_lv_fstype: "{{ quay_lv_fstype }}"
+      rthar_pg_cluster_lv_mntpt: "{{ quay_lv_mntpt }}"
+      rthar_pg_cluster_name: "{{ quay_db_cluster_name }}"
+      rthar_pg_cluster_port: "{{ quay_db_cluster_port }}"
