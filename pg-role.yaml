@@ -3,4 +3,5 @@
   hosts: postgres
   become: true
   roles:
-    - rthar_pg_base
+    - role: rthar_pg_base
+      rthar_pg_base_disk_dev: /dev/sdb

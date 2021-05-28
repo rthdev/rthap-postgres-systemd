@@ -2,7 +2,7 @@
 # tasks file for rthar_pg_base
 - name: Fail when device is not set
   fail:
-    msg: ERROR: Base disk not defined
+    msg: "ERROR: Base disk not defined"
   when: not rthar_pg_base_disk_dev
 
 - name: Ensure disk is partitioned
