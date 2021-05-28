@@ -4,6 +4,7 @@
   assert:
     that:
       - "{{ rthar_pg_base_variable }} is defined"
+      - "{{ rthar_pg_base_variable }} != None"
       - "{{ rthar_pg_base_variable }} | length > 0"
     fail_msg: "{{ rthar_pg_base_variable }} needs to be set for the role to work"
     success_msg: "Required variable {{ rthar_pg_base_variable }} is defined"
