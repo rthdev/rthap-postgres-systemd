@@ -1,0 +1,6 @@
+---
+- name: Playbook to configure Postgres
+  hosts: postgres
+  become: true
+  roles:
+    - rthar_pg_base

@@ -1,0 +1,55 @@
+---
+# tasks file for rthar_pg_base
+- name: Fail when device is not set
+  fail:
+    msg: ERROR: Base disk not defined
+  when: not rthar_pg_base_disk_dev
+
+- name: Ensure disk is partitioned
+  parted:
+    device: "{{ rthar_pg_base_disk_dev }}"
+    number: 1
+    part_start: 0%
+    part_end: 100%
+    state: present
+    flags: [ lvm ]
+    align: optimal
+
+- name: Ensure LVM Volume Group exists
+  lvg:
+    pvs: "{{ rthar_pg_base_disk_dev }}1"
+    vg: "{{ rthar_pg_base_vg_name }}"
+    state: present
+
+- name: Ensure LVM Logical Volume exists
+  lvol:
+    vg: "{{ rthar_pg_base_vg_name }}"
+    lv: "{{ rthar_pg_base_lv_name }}"
+    size: 100%VG
+
+- name: Ensure filesystem is created
+  filesystem:
+    dev: "/dev/{{ rthar_pg_base_vg_name }}/{{ rthar_pg_base_lv_name }}"
+    fstype: "{{ rthar_pg_base_lv_fstype }}"
+
+- name: Ensure base path exists
+  file:
+    path: "{{ rthar_pg_base_lv_mntpt }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: Ensure postgres base directory is mounted
+  mount:
+    path: "{{ rthar_pg_base_lv_mntpt }}"
+    src: "/dev/{{ rthar_pg_base_vg_name }}/{{ rthar_pg_base_lv_name }}"
+    fstype: xfs
+    opts: noatime,defaults
+    state: mounted
+
+- name: Install postgres sql server and deps
+  package:
+    name:
+      - postgresql-server
+      - python3-psycopg2
+    state: installed
