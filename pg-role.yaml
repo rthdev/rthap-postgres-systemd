@@ -13,6 +13,8 @@
     clair_lv_name: lvclair
     clair_lv_fstype: xfs
     clair_lv_mntpt: "{{ base_lv_mntpt }}/clair"
+    clair_db_name: clair
+    clair_db_port: 5432
   roles:
     - role: rthar_pg_base
       rthar_pg_base_disk_dev: "{{ base_disk }}"
@@ -20,4 +22,13 @@
       rthar_pg_base_lv_name: "{{ base_lv_name }}"
       rthar_pg_base_lv_fstype: "{{ base_lv_fstype }}"
       rthar_pg_base_lv_mntpt: "{{ base_lv_mntpt }}"
+
+    - role: rthar_pg_cluster
+      rthar_pg_cluster_disk_dev: "{{ clair_disk }}"
+      rthar_pg_cluster_vg_name: "{{ clair_vg_name }}"
+      rthar_pg_cluster_lv_name: "{{ clair_lv_name }}"
+      rthar_pg_cluster_lv_fstype: "{{ clair_lv_fstype }}"
+      rthar_pg_cluster_lv_mntpt: "{{ clair_lv_mntpt }}"
+      rthar_pg_cluster_name: "{{ clair_db_name }}"
+      rthar_pg_cluster_port: "{{ clair_db_port }}"
 
