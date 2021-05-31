@@ -1,0 +1,10 @@
+---    
+- src: https://github.com/rthdev/rthar_pg_base.git
+  scm: git
+  version: develop
+  name: rthar_pg_base
+
+- src: https://github.com/rthdev/rthar_pg_cluster.git
+  scm: git
+  version: develop
+  name: rthar_pg_cluster
