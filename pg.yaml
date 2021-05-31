@@ -38,6 +38,7 @@
       rthar_pg_cluster_lv_mntpt: "{{ clair_lv_mntpt }}"
       rthar_pg_cluster_name: "{{ clair_db_cluster_name }}"
       rthar_pg_cluster_port: "{{ clair_db_cluster_port }}"
+      rthar_pg_cluster_manage_disks: true
 
     - role: rthar_pg_cluster
       rthar_pg_cluster_disk_dev: "{{ quay_disk }}"
@@ -47,3 +48,4 @@
       rthar_pg_cluster_lv_mntpt: "{{ quay_lv_mntpt }}"
       rthar_pg_cluster_name: "{{ quay_db_cluster_name }}"
       rthar_pg_cluster_port: "{{ quay_db_cluster_port }}"
+      rthar_pg_cluster_manage_disks: true
