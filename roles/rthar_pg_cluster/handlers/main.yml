@@ -1,6 +1,0 @@
----
-# handlers file for rthar_pg_cluster
-- name: Restart postgres
-  systemd:
-    name: "{{ rthar_pg_cluster_systemd_unit }}"
-    state: restarted
